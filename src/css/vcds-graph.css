@@ -11,8 +11,13 @@ html, body {
     animation: fade 0.5s ease-in;
 }
 
+.appName {
+    float: left;
+    margin: 2px 8px 2px 4px;
+}
+
 .grid {
-    padding: 12px;
+    padding: 4px;
 }
 
 .fileBar {
@@ -26,7 +31,12 @@ html, body {
 }
 
 .chip {
-    margin: 0 0 0 4px;
+    margin: 0 0 0 8px;
+}
+
+.graph {
+    height: 200px;
+    padding: 8px;
 }
 
 .hidden {
