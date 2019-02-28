@@ -1,12 +1,28 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import App from 'components/App';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import blue from '@material-ui/core/colors/blue';
 
-import 'react-vis/dist/style.css';
+import App from 'components/App';
 
 import 'fonts.css';
 import 'vcds-graph.css';
 import 'favicon.ico';
 
-ReactDOM.render(<App />, document.getElementById('main'));
+const theme = createMuiTheme({
+    palette: {
+        primary: blue
+    },
+    typography: {
+        useNextVariants: true
+    }
+});
+
+const content = (
+    <MuiThemeProvider theme={theme}>
+        <App />
+    </MuiThemeProvider>
+);
+
+ReactDOM.render(content, document.getElementById('main'));

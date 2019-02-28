@@ -4,7 +4,13 @@ import Chip from '@material-ui/core/Chip';
 export default class FileChips extends React.Component {
 
     getColor = (name) => {
-        return (name === this.props.selected) ? 'secondary' : 'default';
+        return (name === this.props.selectedName) ? 'primary' : 'default';
+    }
+
+    handleSelect = (name) => {
+        if (name !== this.props.selectedName) {
+            this.props.onSelect(name);
+        }
     }
 
     render() {
@@ -17,7 +23,8 @@ export default class FileChips extends React.Component {
                             key={name}
                             label={name}
                             color={this.getColor(name)}
-                            onClick={() => this.props.onSelect(name)}
+                            variant="outlined"
+                            onClick={() => this.handleSelect(name)}
                             onDelete={() => this.props.onDelete(name)}
                         />
                     ))

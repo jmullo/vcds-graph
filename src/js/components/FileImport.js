@@ -1,32 +1,45 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 
+import parseFile from 'utils/parseFile';
+
 export default class FileImport extends React.Component {
 
-    handleImport = (event) => {
-        const { files } = event.target;
-        const newFiles = [];
+    handleParsedFile = ({ file, data, errors }) => {
+        const parsedFile = {
+            name: file.name,
+            data,
+            errors
+        };
 
-        _.forOwn(files, (file) => {
+        this.props.onChange(parsedFile);
+    }
+
+    handleImport = (event) => {
+        _.forOwn(event.target.files, (file) => {
             if (_.includes(this.props.names, file.name)) {
-                
+                console.log('File already imported!');
             } else {
-                newFiles.push(file);
+                parseFile(file, this.handleParsedFile);
             }
         });
-
-        if (!_.isEmpty(newFiles)) {
-            this.props.onChange(newFiles);
-        }
     }
 
     render() {
         return (
             <React.Fragment>
-                <input id="input" accept=".csv" type="file" multiple onChange={this.handleImport}/>
+                <input
+                    id="input"
+                    accept=".csv"
+                    type="file"
+                    multiple
+                    onChange={this.handleImport}/>
                 <label htmlFor="input">
-                    <Button variant="contained" color="primary" component="span">
-                        Import files
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        component="span">
+                        Import logs
                     </Button>
                 </label>
             </React.Fragment>
