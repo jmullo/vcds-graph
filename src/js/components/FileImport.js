@@ -5,11 +5,11 @@ import parseFile from 'utils/parseFile';
 
 export default class FileImport extends React.Component {
 
-    handleParsedFile = ({ file, data, errors }) => {
+    handleParsedFile = ({ name, info, series, errors }) => {
         const parsedFile = {
-            name: file.name,
-            data,
-            errors
+            name,
+            info,
+            series
         };
 
         this.props.onChange(parsedFile);
@@ -28,17 +28,11 @@ export default class FileImport extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <input
-                    id="input"
-                    accept=".csv"
-                    type="file"
-                    multiple
-                    onChange={this.handleImport}/>
+                <input id="input" accept=".csv" type="file" value="" multiple
+                       onChange={this.handleImport}/>
+                       
                 <label htmlFor="input">
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        component="span">
+                    <Button variant="contained" color="primary" component="span">
                         Import logs
                     </Button>
                 </label>
