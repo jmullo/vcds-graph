@@ -17,6 +17,7 @@ html, body {
 }
 
 .grid {
+    width: 100%;
     padding: 4px;
 }
 
@@ -34,6 +35,6 @@ html, body {
     margin: 0 0 0 8px;
 }
 
-.graph {
-    padding: 8px;
+.resizing {
+    visibility: hidden;
 }

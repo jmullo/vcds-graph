@@ -21,27 +21,25 @@ export default class App extends React.Component {
         return (
             <React.Fragment>
                 <CssBaseline />
-                
-                <Grid className="grid" container alignItems="center" spacing={8}>
-                    <Grid item xs={12}>
-                        <Paper className="fileBar" elevation={1}>
-                            <div className="appName">
-                                <Typography variant="h6">
-                                    vcds-graph
-                                </Typography>
-                            </div>
-                            <div className="fileHandler">
-                                <FileHandler onChange={this.handleFileSelect}/>
-                            </div>
-                        </Paper>
+                <div className="grid">
+                    <Grid container alignItems="center" spacing={8}>
+                        <Grid item xs={12}>
+                            <Paper className="fileBar" elevation={1}>
+                                <div className="appName">
+                                    <Typography variant="h6">
+                                        vcds-graph
+                                    </Typography>
+                                </div>
+                                <div className="fileHandler">
+                                    <FileHandler onChange={this.handleFileSelect}/>
+                                </div>
+                            </Paper>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Graph file={this.state.selectedFile}/>
+                        </Grid>
                     </Grid>
-
-                    <Grid item xs={12}>
-                        <Graph file={this.state.selectedFile}/>
-                    </Grid>
-
-                </Grid>
-                
+                </div>
             </React.Fragment>
         );
     }
