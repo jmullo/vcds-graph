@@ -10,7 +10,7 @@ import HighchartsReact from 'highcharts-react-official';
 Exporting(Highcharts);
 //Boost(Highcharts);
 
-import { OPTIONS, DEFAULT_HEIGHT } from 'constants/graphOptions';
+import { OPTIONS, DEFAULT_HEIGHT, MIN_HEIGHT } from 'constants/graphOptions';
 
 export default class Graph extends React.Component {
     state = {
@@ -18,23 +18,23 @@ export default class Graph extends React.Component {
         resizing: false
     }
 
-    handleResizeStart = () => {
-        this.setState({ resizing: true });
-    }
-
     handleResizeStop = () => {
         this.setState({ resizing: false });
     }
 
     handleResize = (event) => {
-        const newHeight = Math.max(this.state.height + event.movementY, DEFAULT_HEIGHT);
+        const newHeight = Math.max(this.state.height + event.movementY, MIN_HEIGHT);
 
         this.resizable.updateSize({ height: newHeight });
-        this.setState({ height: newHeight });
+
+        this.setState({ 
+            height: newHeight,
+            resizing: true
+        });
     }
 
     createSeriesName = (measurement) => {
-        const { sensor, name1, name2 } = measurement;
+        const { sensor, name2 } = measurement;
 
         return `[${sensor}] ${name2}`;
     }
@@ -77,8 +77,7 @@ export default class Graph extends React.Component {
                     defaultSize={{
                         height: this.state.height
                     }}
-                    minHeight={DEFAULT_HEIGHT}
-                    onResizeStart={this.handleResizeStart}
+                    minHeight={MIN_HEIGHT}
                     onResizeStop={this.handleResizeStop}
                     onResize={this.handleResize}
                     ref={(component) => { this.resizable = component; }}

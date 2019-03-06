@@ -12,17 +12,17 @@ const getInfo = (data) => {
 const getSensorTypeAndName = (sensor, index) => {
     if (index === 0) {
         return {
-            sensor: 'M',
+            name: 'M',
             type: 'marker'
         }
     } else if (index === 1) {
         return {
-            sensor: 'T',
-            type: 'time'
+            name: 'T',
+            type: 'timestamp'
         }
     } else if (_.startsWith(sensor, 'F')) {
         return {
-            sensor: sensor,
+            name: sensor,
             type: 'time'
         }
     }
@@ -39,6 +39,7 @@ const getSeries = (data) => {
     if (advancedMeasurementBlocks) {
         const measurements = data.slice(2, 6);
         const measurementValues = data.slice(6);
+        const length = measurementValues.length;
 
         return measurements[0].reduce((result, sensor, index) => {
             const { name, type } = getSensorTypeAndName(sensor, index);
@@ -50,7 +51,8 @@ const getSeries = (data) => {
                     name1: measurements[1][index],
                     name2: measurements[2][index],
                     unit: measurements[3][index],
-                    data: measurementValues.map((row) => row[index])
+                    data: measurementValues.map((row) => row[index]),
+                    length: length
                 });
             }
 
@@ -70,6 +72,8 @@ export default (file, callback) => {
             errors
         }),
         error: ({ error }) => callback({ file, errors: [error] }),
+        encoding: 'windows-1252',
+        worker: false,
         dynamicTyping: true,
         skipEmptyLines: true
     };

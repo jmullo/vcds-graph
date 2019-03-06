@@ -1,12 +1,16 @@
 import _ from 'lodash';
 import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-import FileHandler from 'components/FileHandler';
+import AppInfo from 'components/AppInfo';
+import AppBar from 'components/AppBar';
 import Graph from 'components/Graph';
+import DataTable from 'components/DataTable';
 
 export default class App extends React.Component {
     state = {
@@ -24,22 +28,24 @@ export default class App extends React.Component {
                 <div className="grid">
                     <Grid container alignItems="center" spacing={8}>
                         <Grid item xs={12}>
-                            <Paper className="fileBar" elevation={1}>
-                                <div className="appName">
-                                    <Typography variant="h6">
-                                        vcds-graph
-                                    </Typography>
-                                </div>
-                                <div className="fileHandler">
-                                    <FileHandler onChange={this.handleFileSelect}/>
-                                </div>
-                            </Paper>
+                            <ExpansionPanel>
+                                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                                    <AppBar onChange={this.handleFileSelect}/>
+                                </ExpansionPanelSummary>
+                                <ExpansionPanelDetails>
+                                    <AppInfo />
+                                </ExpansionPanelDetails>
+                            </ExpansionPanel>
+                        </Grid>
+                        <Grid item className="resizable" xs={12}>
+                            <Graph file={this.state.selectedFile}/>
                         </Grid>
                         <Grid item xs={12}>
-                            <Graph file={this.state.selectedFile}/>
+                            <DataTable file={this.state.selectedFile}/>
                         </Grid>
                     </Grid>
                 </div>
+                
             </React.Fragment>
         );
     }

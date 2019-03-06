@@ -1,16 +1,12 @@
+import _ from 'lodash';
 import React from 'react';
 import Button from '@material-ui/core/Button';
 
 import parseFile from 'utils/parseFile';
 
 export default class FileImport extends React.Component {
-
     handleParsedFile = ({ name, info, series, errors }) => {
-        const parsedFile = {
-            name,
-            info,
-            series
-        };
+        const parsedFile = { name, info, series };
 
         this.props.onChange(parsedFile);
     }
@@ -20,7 +16,9 @@ export default class FileImport extends React.Component {
             if (_.includes(this.props.names, file.name)) {
                 console.log('File already imported!');
             } else {
-                parseFile(file, this.handleParsedFile);
+                _.defer(() => {
+                    parseFile(file, this.handleParsedFile);
+                });
             }
         });
     }

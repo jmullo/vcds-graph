@@ -33,4 +33,16 @@
         url('../../node_modules/typeface-roboto/files/roboto-latin-500.woff2') format('woff2'),
         url('../../node_modules/typeface-roboto/files/roboto-latin-500.woff') format('woff');
 }
+
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 700;
+    src:
+        local('Roboto Medium '),
+        local('Roboto-Medium'),
+        url('../../node_modules/typeface-roboto/files/roboto-latin-700.woff2') format('woff2'),
+        url('../../node_modules/typeface-roboto/files/roboto-latin-700.woff') format('woff');
+}
   

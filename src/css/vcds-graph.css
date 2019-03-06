@@ -11,18 +11,22 @@ html, body {
     animation: fade 0.5s ease-in;
 }
 
-.appName {
-    float: left;
-    margin: 2px 8px 2px 4px;
-}
-
 .grid {
     width: 100%;
     padding: 4px;
 }
 
-.fileBar {
-    padding: 8px;
+.appName {
+    width: 120px;
+    user-select: none;
+}
+
+.link {
+    padding-right: 16px;
+}
+
+.icon {
+    margin-right: 8px;
 }
 
 #input {
@@ -31,10 +35,18 @@ html, body {
     top: -1000px;
 }
 
-.chip {
-    margin: 0 0 0 8px;
+.resizable {
+    margin-bottom: 4px;
 }
 
 .resizing {
     visibility: hidden;
+}
+
+.hidden {
+    display: none;
+}
+
+tbody tr {
+    height: 24px !important;
 }

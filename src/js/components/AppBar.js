@@ -1,12 +1,15 @@
 import React from 'react';
+import Grid from '@material-ui/core/Grid';
 
+import AppName from 'components/AppName';
 import FileImport from 'components/FileImport';
 import FileChips from 'components/FileChips';
 
-export default class FileHandler extends React.Component {
+export default class AppBar extends React.Component {
     state = {
         files: [],
-        selectedFileName: null
+        selectedFileName: null,
+        importing: false
     }
 
     handleFileImport = (file) => {
@@ -37,16 +40,23 @@ export default class FileHandler extends React.Component {
         const fileNames = this.state.files.map(({name}) => (name));
 
         return (
-            <React.Fragment>
-                <FileImport
-                    names={fileNames}
-                    onChange={this.handleFileImport}/>
+            <Grid container alignItems="center" spacing={8}>
+                <Grid item>
+                    <AppName className="appName"/>
+                </Grid>
+                <Grid item>
+                    <FileImport
+                        names={fileNames}
+                        onStart={() => this.setState({ importing: true })}
+                        onComplete={() => this.setState({ importing: true })}
+                        onChange={this.handleFileImport}/>
+                </Grid>
                 <FileChips 
                     names={fileNames}
                     selectedName={this.state.selectedFileName}
                     onSelect={this.handleFileSelect}
                     onDelete={this.handleFileDelete}/>
-            </React.Fragment>
+            </Grid>
         );
     }
 }
