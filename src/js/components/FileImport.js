@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { defer, forOwn, includes } from 'lodash';
 import React from 'react';
 import Button from '@material-ui/core/Button';
 
@@ -6,7 +6,7 @@ import { withFileContext } from 'components/FileContext';
 import parseFile from 'utils/parseFile';
 
 class FileImport extends React.Component {
-    
+
     handleParsedFile = ({ name, info, series, errors }) => {
         const parsedFile = { name, info, series };
 
@@ -14,11 +14,11 @@ class FileImport extends React.Component {
     }
 
     handleImport = (event) => {
-        _.forOwn(event.target.files, (file) => {
-            if (_.includes(this.props.names, file.name)) {
+        forOwn(event.target.files, (file) => {
+            if (includes(this.props.names, file.name)) {
                 console.log('File already imported!');
             } else {
-                _.defer(() => {
+                defer(() => {
                     parseFile(file, this.handleParsedFile);
                 });
             }

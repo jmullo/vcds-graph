@@ -1,6 +1,6 @@
-import _ from 'lodash';
+import { memoize, isEqual } from 'lodash';
 import React from 'react';
-import Resizable from 're-resizable';
+import { Resizable } from 're-resizable';
 import Paper from '@material-ui/core/Paper';
 import Highcharts from 'highcharts';
 import Exporting from 'highcharts/modules/exporting';
@@ -26,7 +26,7 @@ export default class Graph extends React.Component {
 
         this.resizable.updateSize({ height: newHeight });
 
-        this.setState({ 
+        this.setState({
             height: newHeight,
             resizing: true
         });
@@ -38,13 +38,13 @@ export default class Graph extends React.Component {
         return `[${sensor}] ${name2}`;
     }
 
-    createTitle = _.memoize((fileName) => {
+    createTitle = memoize((fileName) => {
         const { dateTime, versions, other } = this.props.file.info;
-        
+
         return `${dateTime} - ${versions} - ${other}`;
     })
 
-    createSeries = _.memoize((fileName) => {
+    createSeries = memoize((fileName) => {
         return this.props.file.series
             .filter((measurement) => measurement.type === 'data')
             .map((measurement) => {
@@ -59,8 +59,8 @@ export default class Graph extends React.Component {
     })
 
     shouldComponentUpdate(nextProps, nextState) {
-        if (_.isEqual(this.props.file.info, nextProps.file.info) && 
-            _.isEqual(this.state, nextState)) {
+        if (isEqual(this.props.file.info, nextProps.file.info) &&
+            isEqual(this.state, nextState)) {
             return false;
         }
 
@@ -72,7 +72,7 @@ export default class Graph extends React.Component {
             return null;
         }
 
-        const { name: fileName } = this.props.file; 
+        const { name: fileName } = this.props.file;
         const options = { ...OPTIONS };
 
         options.chart.height = this.state.height;
@@ -80,7 +80,7 @@ export default class Graph extends React.Component {
         options.series = this.createSeries(fileName);
 
         return (
-            <Paper className="graphPaper" elevation={10}>
+            <Paper className="graphPaper" elevation={4}>
                 <Resizable
                     className="graph"
                     defaultSize={{
@@ -90,7 +90,7 @@ export default class Graph extends React.Component {
                     onResizeStop={this.handleResizeStop}
                     onResize={this.handleResize}
                     ref={(component) => { this.resizable = component; }}
-                    enable={{ 
+                    enable={{
                         top: false,
                         right: false,
                         bottom: true,

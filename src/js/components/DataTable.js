@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { memoize, times } from 'lodash';
 import React from 'react';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -31,7 +31,7 @@ export default class DataTable extends React.Component {
                     </div>
                 </TableCell>
             );
-        } 
+        }
 
         return (
             <TableCell key={index} align="right">
@@ -45,14 +45,14 @@ export default class DataTable extends React.Component {
         );
     }
 
-    createHeadCells = _.memoize((fileName) => {
+    createHeadCells = memoize((fileName) => {
         return this.props.file.series
             .filter((measurement) => measurement.type !== 'time')
             .map((measurement, index) => this.createHeadCell(measurement, index));
     })
 
-    createRows = _.memoize((fileName) => {
-        return _.times(this.props.file.series[0].length, (index) => (
+    createRows = memoize((fileName) => {
+        return times(this.props.file.series[0].length, (index) => (
             <TableRow key={index}>
                 {
                     this.props.file.series
@@ -72,7 +72,7 @@ export default class DataTable extends React.Component {
             return null;
         }
 
-        const { name: fileName } = this.props.file; 
+        const { name: fileName } = this.props.file;
 
         return (
             <Paper elevation={1}>

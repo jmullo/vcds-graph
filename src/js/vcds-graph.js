@@ -5,6 +5,5 @@ import App from 'components/App';
 
 import 'fonts.css';
 import 'vcds-graph.css';
-import 'favicon.ico';
 
-ReactDOM.render(<App />, document.getElementById('main'));
+export default ReactDOM.render(<App />, document.getElementById('main'));

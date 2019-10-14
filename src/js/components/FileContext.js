@@ -1,3 +1,4 @@
+import { reject } from 'lodash';
 import React from 'react';
 
 const Context = React.createContext();
@@ -20,7 +21,7 @@ export class FileContext extends React.Component {
         const newSelectedFileName = (fileName === selectedFileName) ? null : selectedFileName;
 
         this.setState({
-            files: _.reject(files, ['name', fileName]),
+            files: reject(files, ['name', fileName]),
             selectedFileName: newSelectedFileName
         });
     }

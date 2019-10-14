@@ -1,11 +1,11 @@
-import _ from 'lodash';
+import { startsWith, trim } from 'lodash';
 import Papa from 'papaparse';
 
 const getInfo = (data) => {
     return {
         dateTime: data[0].slice(0, 5).join(' '),
         versions: data[0].slice(5).join(', '),
-        other: _.trim(data[1].join(', '), [' ', ','])
+        other: trim(data[1].join(', '), [' ', ','])
     };
 };
 
@@ -20,7 +20,7 @@ const getSensorTypeAndName = (sensor, index) => {
             name: 'T',
             type: 'timestamp'
         }
-    } else if (_.startsWith(sensor, 'F')) {
+    } else if (startsWith(sensor, 'F')) {
         return {
             name: sensor,
             type: 'time'

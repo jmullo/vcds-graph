@@ -23,6 +23,7 @@ class FileChips extends React.Component {
                     this.props.fileContext.fileNames.map((name) => (
                         <Grid item key={name}>
                             <Chip
+                                className={"chip"}
                                 label={name}
                                 color={this.getColor(name)}
                                 variant="outlined"
