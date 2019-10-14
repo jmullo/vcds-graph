@@ -34,33 +34,27 @@ const getSensorTypeAndName = (sensor, index) => {
 };
 
 const getSeries = (data) => {
-    const advancedMeasurementBlocks = _.includes(data[1], 'ADVMB') ? true : false;
+    const measurements = data.slice(2, 6);
+    const measurementValues = data.slice(6);
+    const length = measurementValues.length;
 
-    if (advancedMeasurementBlocks) {
-        const measurements = data.slice(2, 6);
-        const measurementValues = data.slice(6);
-        const length = measurementValues.length;
+    return measurements[0].reduce((result, sensor, index) => {
+        const { name, type } = getSensorTypeAndName(sensor, index);
 
-        return measurements[0].reduce((result, sensor, index) => {
-            const { name, type } = getSensorTypeAndName(sensor, index);
+        if (name) {
+            result.push({
+                sensor: name,
+                type: type,
+                name1: measurements[1][index],
+                name2: measurements[2][index],
+                unit: measurements[3][index],
+                data: measurementValues.map((row) => row[index]),
+                length: length
+            });
+        }
 
-            if (name) {
-                result.push({
-                    sensor: name,
-                    type: type,
-                    name1: measurements[1][index],
-                    name2: measurements[2][index],
-                    unit: measurements[3][index],
-                    data: measurementValues.map((row) => row[index]),
-                    length: length
-                });
-            }
-
-            return result;
-        }, []);
-    }
-
-    return null;
+        return result;
+    }, []);
 }
 
 export default (file, callback) => {

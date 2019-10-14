@@ -4,15 +4,14 @@ import Resizable from 're-resizable';
 import Paper from '@material-ui/core/Paper';
 import Highcharts from 'highcharts';
 import Exporting from 'highcharts/modules/exporting';
-import Boost from 'highcharts/modules/boost';
 import HighchartsReact from 'highcharts-react-official';
 
 Exporting(Highcharts);
-//Boost(Highcharts);
 
 import { OPTIONS, DEFAULT_HEIGHT, MIN_HEIGHT } from 'constants/graphOptions';
 
 export default class Graph extends React.Component {
+
     state = {
         height: DEFAULT_HEIGHT,
         resizing: false
@@ -59,6 +58,15 @@ export default class Graph extends React.Component {
         });
     })
 
+    shouldComponentUpdate(nextProps, nextState) {
+        if (_.isEqual(this.props.file.info, nextProps.file.info) && 
+            _.isEqual(this.state, nextState)) {
+            return false;
+        }
+
+        return true;
+    }
+
     render() {
         if (!this.props.file) {
             return null;
@@ -72,8 +80,9 @@ export default class Graph extends React.Component {
         options.series = this.createSeries(fileName);
 
         return (
-            <Paper elevation={1}>
+            <Paper className="graphPaper" elevation={10}>
                 <Resizable
+                    className="graph"
                     defaultSize={{
                         height: this.state.height
                     }}

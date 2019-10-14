@@ -2,15 +2,17 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Chip from '@material-ui/core/Chip';
 
-export default class FileChips extends React.Component {
+import { withFileContext } from 'components/FileContext';
+
+class FileChips extends React.Component {
 
     getColor = (name) => {
-        return (name === this.props.selectedName) ? 'primary' : 'default';
+        return (name === this.props.fileContext.selectedFileName) ? 'primary' : 'default';
     }
 
     handleSelect = (name) => {
-        if (name !== this.props.selectedName) {
-            this.props.onSelect(name);
+        if (name !== this.props.fileContext.selectedFileName) {
+            this.props.fileContext.selectFile(name);
         }
     }
 
@@ -18,7 +20,7 @@ export default class FileChips extends React.Component {
         return (
             <React.Fragment>
                 {
-                    this.props.names.map((name) => (
+                    this.props.fileContext.fileNames.map((name) => (
                         <Grid item key={name}>
                             <Chip
                                 label={name}
@@ -30,7 +32,7 @@ export default class FileChips extends React.Component {
                                 }}
                                 onDelete={(event) => {
                                     event.stopPropagation();
-                                    this.props.onDelete(name)
+                                    this.props.fileContext.removeFile(name)
                                 }}/>
                         </Grid>
                     ))
@@ -39,3 +41,5 @@ export default class FileChips extends React.Component {
         );
     }
 }
+
+export default withFileContext(FileChips);

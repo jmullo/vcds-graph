@@ -2,13 +2,15 @@ import _ from 'lodash';
 import React from 'react';
 import Button from '@material-ui/core/Button';
 
+import { withFileContext } from 'components/FileContext';
 import parseFile from 'utils/parseFile';
 
-export default class FileImport extends React.Component {
+class FileImport extends React.Component {
+    
     handleParsedFile = ({ name, info, series, errors }) => {
         const parsedFile = { name, info, series };
 
-        this.props.onChange(parsedFile);
+        this.props.fileContext.addFile(parsedFile);
     }
 
     handleImport = (event) => {
@@ -26,8 +28,7 @@ export default class FileImport extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <input id="input" accept=".csv" type="file" value="" multiple
-                       onChange={this.handleImport}/>
+                <input id="input" accept=".csv" type="file" value="" multiple onChange={this.handleImport}/>
                 <label htmlFor="input">
                     <Button variant="contained" color="primary" component="span">
                         Import logs
@@ -37,3 +38,5 @@ export default class FileImport extends React.Component {
         );
     }
 }
+
+export default withFileContext(FileImport);

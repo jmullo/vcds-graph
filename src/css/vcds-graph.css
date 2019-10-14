@@ -35,8 +35,12 @@ html, body {
     top: -1000px;
 }
 
+.graph {
+    margin: 2px;
+}
+
 .resizable {
-    margin-bottom: 4px;
+    margin-bottom: 6px;
 }
 
 .resizing {

@@ -3,7 +3,7 @@ import React from 'react';
 import Link from '@material-ui/core/Link';
 import Octicon, { MarkGithub, Mail } from '@githubprimer/octicons-react'
 
-export default class AppInfo extends React.Component {
+export default class TopPanelDetails extends React.Component {
 
     render() {
         return (
