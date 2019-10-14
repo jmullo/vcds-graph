@@ -1,9 +1,9 @@
 import { reject } from 'lodash';
 import React from 'react';
 
-const Context = React.createContext();
+export const FileContext = React.createContext();
 
-export class FileContext extends React.Component {
+export default class FileContextProvider extends React.Component {
     state = {
         files: [],
         selectedFileName: null
@@ -31,10 +31,10 @@ export class FileContext extends React.Component {
     }
 
     render() {
-        const names = this.state.files.map(({name}) => (name));
+        const names = this.state.files.map(({ name }) => (name));
 
         return (
-            <Context.Provider value={{
+            <FileContext.Provider value={{
                 files: this.state.files,
                 fileNames: names,
                 selectedFileName: this.state.selectedFileName,
@@ -43,19 +43,7 @@ export class FileContext extends React.Component {
                 selectFile: this.selectFile
             }}>
                 {this.props.children}
-            </Context.Provider>
+            </FileContext.Provider>
         );
     }
-}
-
-export function withFileContext(Component) {
-    return function WrapperComponent(props) {
-        return (
-            <Context.Consumer>
-                {
-                    (context) => <Component {...props} fileContext={context}/>
-                }
-            </Context.Consumer>
-        );
-    };
 }

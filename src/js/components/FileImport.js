@@ -2,7 +2,7 @@ import { defer, forOwn, includes } from 'lodash';
 import React from 'react';
 import Button from '@material-ui/core/Button';
 
-import { withFileContext } from 'components/FileContext';
+import { FileContext } from 'components/FileContext';
 import parseFile from 'utils/parseFile';
 
 class FileImport extends React.Component {
@@ -10,7 +10,7 @@ class FileImport extends React.Component {
     handleParsedFile = ({ name, info, series, errors }) => {
         const parsedFile = { name, info, series };
 
-        this.props.fileContext.addFile(parsedFile);
+        this.context.addFile(parsedFile);
     }
 
     handleImport = (event) => {
@@ -39,4 +39,6 @@ class FileImport extends React.Component {
     }
 }
 
-export default withFileContext(FileImport);
+FileImport.contextType = FileContext;
+
+export default FileImport;
