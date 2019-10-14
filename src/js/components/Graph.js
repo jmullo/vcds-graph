@@ -1,4 +1,4 @@
-import { memoize, isEqual } from 'lodash';
+import { isEqual } from 'lodash';
 import React from 'react';
 import { Resizable } from 're-resizable';
 import Paper from '@material-ui/core/Paper';
@@ -17,6 +17,8 @@ export default class Graph extends React.Component {
         resizing: false
     }
 
+    options = null;
+
     handleResizeStop = () => {
         this.setState({ resizing: false });
     }
@@ -32,19 +34,20 @@ export default class Graph extends React.Component {
         });
     }
 
+    createTitle = () => {
+        const { name } = this.props.file;
+        const { dateTime, versions, other } = this.props.file.info;
+
+        return `${name} - ${dateTime} - ${versions} - ${other}`;
+    }
+
     createSeriesName = (measurement) => {
         const { sensor, name2 } = measurement;
 
         return `[${sensor}] ${name2}`;
     }
 
-    createTitle = memoize((fileName) => {
-        const { dateTime, versions, other } = this.props.file.info;
-
-        return `${dateTime} - ${versions} - ${other}`;
-    })
-
-    createSeries = memoize((fileName) => {
+    createSeries = () => {
         return this.props.file.series
             .filter((measurement) => measurement.type === 'data')
             .map((measurement) => {
@@ -53,16 +56,29 @@ export default class Graph extends React.Component {
                     data: measurement.data,
                     tooltip: {
                         valueSuffix: measurement.unit
-                    }
                 }
+            }
         });
-    })
+    }
+
+    updateOptions = () => {
+        if (!this.options) {
+            this.options = { ...OPTIONS };
+            this.options.subtitle.text = this.createTitle();
+            this.options.series = this.createSeries();
+        }
+
+        this.options.chart.height = this.state.height;
+    }
 
     shouldComponentUpdate(nextProps, nextState) {
-        if (isEqual(this.props.file.info, nextProps.file.info) &&
+        if ((this.state.resizing && nextState.resizing) ||
+            isEqual(this.props.file.info, nextProps.file.info) &&
             isEqual(this.state, nextState)) {
             return false;
         }
+
+        console.log('update!');
 
         return true;
     }
@@ -72,15 +88,12 @@ export default class Graph extends React.Component {
             return null;
         }
 
-        const { name: fileName } = this.props.file;
-        const options = { ...OPTIONS };
+        this.updateOptions();
 
-        options.chart.height = this.state.height;
-        options.subtitle.text = this.createTitle(fileName);
-        options.series = this.createSeries(fileName);
+        console.log('render...');
 
         return (
-            <Paper className="graphPaper" elevation={4}>
+            <Paper elevation={4}>
                 <Resizable
                     className="graph"
                     defaultSize={{
@@ -89,7 +102,7 @@ export default class Graph extends React.Component {
                     minHeight={MIN_HEIGHT}
                     onResizeStop={this.handleResizeStop}
                     onResize={this.handleResize}
-                    ref={(component) => { this.resizable = component; }}
+                    ref={(component) => this.resizable = component }
                     enable={{
                         top: false,
                         right: false,
@@ -102,7 +115,7 @@ export default class Graph extends React.Component {
                     }}>
                     {
                         !this.state.resizing &&
-                        <HighchartsReact highcharts={Highcharts} options={options} />
+                        <HighchartsReact highcharts={Highcharts} options={this.options} />
                     }
                 </Resizable>
             </Paper>

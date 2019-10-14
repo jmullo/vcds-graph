@@ -24,14 +24,6 @@ html, body {
     margin-right: -8px;
 }
 
-.link {
-    padding-right: 16px;
-}
-
-.icon {
-    margin-right: 8px;
-}
-
 #input {
     display: none;
     position: absolute;
@@ -44,14 +36,6 @@ html, body {
 
 .resizable {
     margin-bottom: 6px;
-}
-
-.resizing {
-    _visibility: hidden;
-}
-
-.hidden {
-    _display: none;
 }
 
 tbody tr {

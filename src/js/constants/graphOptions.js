@@ -45,7 +45,6 @@ export const OPTIONS = {
         line: {
             animation: false,
             allowPointSelect: true,
-            boostThreshold: 1,
             lineWidth: 1,
             marker: {
                 enabled: false,
@@ -94,5 +93,10 @@ export const OPTIONS = {
         },
         minorTickInterval: 'auto',
         tickWidth: 0
+    },
+    exporting: {
+        sourceWidth: 1200,
+        sourceHeight: 500,
+        scale: 1.5
     }
 };
