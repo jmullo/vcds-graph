@@ -18,7 +18,7 @@ class FileChips extends React.Component {
 
     render() {
         return (
-            <React.Fragment>
+            <Grid container spacing={0}>
                 {
                     this.context.fileNames.map((name) => (
                         <Grid item key={name}>
@@ -38,7 +38,7 @@ class FileChips extends React.Component {
                         </Grid>
                     ))
                 }
-            </React.Fragment>
+            </Grid>
         );
     }
 }

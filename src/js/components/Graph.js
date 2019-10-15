@@ -78,8 +78,6 @@ export default class Graph extends React.Component {
             return false;
         }
 
-        console.log('update!');
-
         return true;
     }
 
@@ -89,8 +87,6 @@ export default class Graph extends React.Component {
         }
 
         this.updateOptions();
-
-        console.log('render...');
 
         return (
             <Paper elevation={4}>

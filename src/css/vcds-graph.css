@@ -13,15 +13,20 @@ html, body {
 
 .topPanel {
     padding-left: 16px;
-    padding-right: 16px;
+    padding-right: 2px;
 }
 
 .appName {
     user-select: none;
 }
 
-.chip {
-    margin-right: -8px;
+label .import {
+    margin: 8px;
+}
+
+div .chip {
+    margin-top: 1px;
+    margin-right: 8px;
 }
 
 #input {
@@ -36,6 +41,11 @@ html, body {
 
 .resizable {
     margin-bottom: 6px;
+}
+
+.infoDialog {
+    margin: 20px;
+    user-select: none;
 }
 
 tbody tr {

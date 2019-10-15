@@ -30,7 +30,7 @@ class FileImport extends React.Component {
             <React.Fragment>
                 <input id="input" accept=".csv" type="file" value="" multiple onChange={this.handleImport}/>
                 <label htmlFor="input">
-                    <Button variant="contained" color="primary" component="span">
+                    <Button className="import" variant="contained" color="primary" component="span">
                         Import logs
                     </Button>
                 </label>
