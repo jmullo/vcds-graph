@@ -1,4 +1,4 @@
-import { defer, forOwn, includes } from 'lodash';
+import { defer, forEach, includes } from 'lodash';
 import React from 'react';
 import Button from '@material-ui/core/Button';
 
@@ -14,7 +14,7 @@ class FileImport extends React.Component {
     }
 
     handleImport = (event) => {
-        forOwn(event.target.files, (file) => {
+        forEach(event.target.files, (file) => {
             if (includes(this.props.names, file.name)) {
                 console.log('File already imported!');
             } else {
