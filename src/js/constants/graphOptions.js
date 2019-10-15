@@ -5,7 +5,7 @@ export const OPTIONS = {
     credits: {
         enabled: false
     },
-    colors: [
+    _colors: [
         '#4363d8',
         '#e6194B',
         '#3cb44b',
@@ -45,16 +45,14 @@ export const OPTIONS = {
         line: {
             animation: false,
             allowPointSelect: true,
-            lineWidth: 1,
+            lineWidth: 1.2,
             marker: {
                 enabled: false,
                 symbol: 'circle',
                 states: {
                     hover: {
-                        enabled: true
-                    },
-                    select: {
-                        enabled: true
+                        enabled: true,
+                        lineWidthPlus: 0.6
                     }
                 }
             }

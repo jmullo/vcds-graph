@@ -21,7 +21,8 @@
     "vag",
     "graph",
     "log",
-    "viewer"
+    "viewer",
+    "visualizer"
   ],
   "author": "Jussi Mullo <mulloju@gmail.com>",
   "license": "MIT",
@@ -58,6 +59,7 @@
     "highcharts": "7.2.0",
     "highcharts-react-official": "2.2.2",
     "lodash": "4.17.15",
+    "notistack": "0.9.4",
     "papaparse": "5.1.0",
     "re-resizable": "6.1.0",
     "react": "16.10.2",

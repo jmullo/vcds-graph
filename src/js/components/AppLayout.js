@@ -4,7 +4,6 @@ import Grid from '@material-ui/core/Grid';
 import { FileContext } from 'components/FileContext';
 import TopPanel from 'components/TopPanel';
 import Graph from 'components/Graph';
-//import DataTable from 'components/DataTable';
 
 class AppLayout extends React.Component {
 

@@ -55,17 +55,31 @@ const getSeries = (data) => {
 
         return result;
     }, []);
-}
+};
+
+const handleComplete = (fileName, { data, errors }, callback) => {
+    try {
+        callback({
+            name: fileName,
+            info: getInfo(data),
+            series: getSeries(data)
+        });
+    } catch {
+        errors.push({
+            message: `Unable to import "${fileName}". Try another log file or contact: jussi.mullo@iki.fi`
+        });
+
+        callback({
+            name: fileName,
+            errors: errors
+        });
+    }
+};
 
 export default (file, callback) => {
     const config = {
-        complete: ({ data, errors }) => callback({
-            name: file.name,
-            info: getInfo(data),
-            series: getSeries(data),
-            errors
-        }),
-        error: ({ error }) => callback({ file, errors: [error] }),
+        complete: (result) => handleComplete(file.name, result, callback),
+        error: ({ error }) => callback({ name: file.name, errors: [error] }),
         encoding: 'windows-1252',
         worker: false,
         dynamicTyping: true,
