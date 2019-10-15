@@ -21,11 +21,11 @@ html, body {
 }
 
 label .import {
-    margin: 8px;
+    margin: 2px 8px 0 8px;
 }
 
 div .chip {
-    margin-top: 1px;
+    margin-top: 4px;
     margin-right: 8px;
 }
 
@@ -46,6 +46,10 @@ div .chip {
 .infoDialog {
     margin: 20px;
     user-select: none;
+}
+
+.dialog .infoButton {
+    margin-top: 4px;
 }
 
 tbody tr {
