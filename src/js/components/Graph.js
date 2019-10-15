@@ -19,19 +19,19 @@ export default class Graph extends React.Component {
 
     options = null;
 
-    handleResizeStop = () => {
-        this.setState({ resizing: false });
-    }
-
-    handleResize = (event) => {
-        const newHeight = Math.max(this.state.height + event.movementY, MIN_HEIGHT);
-
-        this.resizable.updateSize({ height: newHeight });
+    handleResizeStop = (event, direction, ref, delta) => {
+        const newHeight = Math.max(this.state.height + delta.height, MIN_HEIGHT);
 
         this.setState({
             height: newHeight,
-            resizing: true
+            resizing: false
         });
+    }
+
+    handleResize = () => {
+        if (!this.state.resizing) {
+            this.setState({ resizing: true });
+        }
     }
 
     createTitle = () => {
@@ -98,7 +98,6 @@ export default class Graph extends React.Component {
                     minHeight={MIN_HEIGHT}
                     onResizeStop={this.handleResizeStop}
                     onResize={this.handleResize}
-                    ref={(component) => this.resizable = component }
                     enable={{
                         top: false,
                         right: false,
