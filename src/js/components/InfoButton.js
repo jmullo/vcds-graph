@@ -60,8 +60,8 @@ export default class InfoButton extends React.Component {
                                         <Link
                                             color="secondary"
                                             variant="body1"
-                                            href="https://github.com/jmullo/bussit">
-                                            https://github.com/jmullo/bussit
+                                            href="https://github.com/jmullo/vcds-graph">
+                                            https://github.com/jmullo/vcds-graph
                                         </Link>
                                     </Typography>
                                 </Grid>
