@@ -43,7 +43,11 @@ export default class Graph extends React.Component {
     }
 
     createSeriesName = (measurement) => {
-        const { sensor, name2 } = measurement;
+        const { advanced, sensor, name1, name2 } = measurement;
+
+        if (advanced) {
+            return `[${sensor}] ${name1 || ''} ${name2 || ''}`;
+        }
 
         return `[${sensor}] ${name2}`;
     }

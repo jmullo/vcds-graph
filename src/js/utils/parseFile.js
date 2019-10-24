@@ -1,4 +1,4 @@
-import { startsWith, trim } from 'lodash';
+import { startsWith, includes, trim } from 'lodash';
 import Papa from 'papaparse';
 
 const getInfo = (data) => {
@@ -33,8 +33,34 @@ const getSensorTypeAndName = (sensor, index) => {
     }
 };
 
+const isAdvanced = (measurements) => !measurements[0][0] && measurements[0][1];
+
+const harmonize = (measurements) => {
+    if (isAdvanced(measurements)) {
+        measurements.advanced = true;
+        measurements[0][1] = null;
+
+        let previousGroup = null;
+
+        measurements[0].forEach((column, index) => {
+            if (includes(column, ':')) {
+                measurements[0][index] = 'F';
+            } else if (startsWith(column, "'")) {
+                previousGroup = column.replace("'", '');
+                measurements[0][index] = previousGroup;
+            } else if (column === null) {
+                measurements[0][index] = previousGroup;
+            } else {
+                measurements[0][index] = null;
+            }
+        });
+    }
+
+    return measurements
+};
+
 const getSeries = (data) => {
-    const measurements = data.slice(2, 6);
+    const measurements = harmonize(data.slice(2, 6));
     const measurementValues = data.slice(6);
     const length = measurementValues.length;
 
@@ -49,7 +75,8 @@ const getSeries = (data) => {
                 name2: measurements[2][index],
                 unit: measurements[3][index],
                 data: measurementValues.map((row) => row[index]),
-                length: length
+                length: length,
+                advanced: measurements.advanced
             });
         }
 
