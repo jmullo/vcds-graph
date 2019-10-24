@@ -19,11 +19,11 @@ export default class App extends React.Component {
         return (
             <MuiThemeProvider theme={theme}>
                 <CssBaseline />
-                <FileContextProvider>
-                    <SnackbarProvider maxSnack={5}>
+                <SnackbarProvider maxSnack={5}>
+                    <FileContextProvider>
                         <AppLayout />
-                    </SnackbarProvider>
-                </FileContextProvider>
+                    </FileContextProvider>
+                </SnackbarProvider>
             </MuiThemeProvider>
         );
     }

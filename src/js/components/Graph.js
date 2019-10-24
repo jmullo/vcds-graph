@@ -9,6 +9,7 @@ import HighchartsReact from 'highcharts-react-official';
 Exporting(Highcharts);
 
 import { OPTIONS, DEFAULT_HEIGHT, MIN_HEIGHT } from 'constants/graphOptions';
+import ErrorBoundary from './ErrorBoundary';
 
 export default class Graph extends React.Component {
 
@@ -89,31 +90,33 @@ export default class Graph extends React.Component {
         this.updateOptions();
 
         return (
-            <Paper elevation={4}>
-                <Resizable
-                    className="graph"
-                    defaultSize={{
-                        height: this.state.height
-                    }}
-                    minHeight={MIN_HEIGHT}
-                    onResizeStop={this.handleResizeStop}
-                    onResize={this.handleResize}
-                    enable={{
-                        top: false,
-                        right: false,
-                        bottom: true,
-                        left: false,
-                        topRight: false,
-                        bottomRight: false,
-                        bottomLeft: false,
-                        topLeft: false
-                    }}>
-                    {
-                        !this.state.resizing &&
-                        <HighchartsReact highcharts={Highcharts} options={this.options} />
-                    }
-                </Resizable>
-            </Paper>
+            <ErrorBoundary>
+                <Paper elevation={4}>
+                    <Resizable
+                        className="graph"
+                        defaultSize={{
+                            height: this.state.height
+                        }}
+                        minHeight={MIN_HEIGHT}
+                        onResizeStop={this.handleResizeStop}
+                        onResize={this.handleResize}
+                        enable={{
+                            top: false,
+                            right: false,
+                            bottom: true,
+                            left: false,
+                            topRight: false,
+                            bottomRight: false,
+                            bottomLeft: false,
+                            topLeft: false
+                        }}>
+                        {
+                            !this.state.resizing &&
+                            <HighchartsReact highcharts={Highcharts} options={this.options} />
+                        }
+                    </Resizable>
+                </Paper>
+            </ErrorBoundary>
         );
     }
 }
