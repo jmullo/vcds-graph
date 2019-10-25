@@ -38,7 +38,13 @@ const isAdvanced = (measurements) => !measurements[0][0] && measurements[0][1];
 const harmonize = (measurements) => {
     if (isAdvanced(measurements)) {
         measurements.advanced = true;
+
         measurements[0][1] = null;
+        measurements[1][0] = measurements[3][0];
+        measurements[3][0] = null;
+        measurements[1][1] = measurements[2][1];
+        measurements[2][1] = measurements[3][1];
+        measurements[3][1] = null;
 
         let previousGroup = null;
 

@@ -49,7 +49,7 @@ export default class Graph extends React.Component {
             return `[${sensor}] ${name1 || ''} ${name2 || ''}`;
         }
 
-        return `[${sensor}] ${name2}`;
+        return `[${sensor}] ${name2 || ''}`;
     }
 
     createSeries = () => {
