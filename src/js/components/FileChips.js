@@ -34,7 +34,7 @@ class FileChips extends React.Component {
                                 onDelete={(event) => {
                                     event.stopPropagation();
                                     this.context.removeFile(name)
-                                }}/>
+                                }} />
                         </Grid>
                     ))
                 }

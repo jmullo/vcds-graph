@@ -78,8 +78,9 @@ export default class Graph extends React.Component {
 
     shouldComponentUpdate(nextProps, nextState) {
         if ((this.state.resizing && nextState.resizing) ||
+            (this.props.selected === nextProps.selected &&
             isEqual(this.props.file.info, nextProps.file.info) &&
-            isEqual(this.state, nextState)) {
+            isEqual(this.state, nextState))) {
             return false;
         }
 
@@ -116,7 +117,12 @@ export default class Graph extends React.Component {
                         }}>
                         {
                             !this.state.resizing &&
-                            <HighchartsReact highcharts={Highcharts} options={this.options} />
+                            <React.Fragment>
+                                {
+                                    this.props.selected && <div className="circle" />
+                                }
+                                <HighchartsReact highcharts={Highcharts} options={this.options} />
+                            </React.Fragment>
                         }
                     </Resizable>
                 </Paper>

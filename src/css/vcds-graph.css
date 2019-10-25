@@ -48,6 +48,15 @@ div .chip {
     position: relative;
 }
 
+.circle {
+    position: absolute;
+    left: -4px;
+    z-index: 100;
+    width: 34px;
+    height: 34px;
+    background: radial-gradient(ellipse at center, rgba(33, 150, 243, 0.6) 0%, rgba(0, 0, 0, 0) 40%);
+}
+
 .graph {
     margin: 2px;
 }
@@ -93,7 +102,7 @@ div .chip {
 
 .table tbody tr:hover td {
     color: rgba(255, 255, 255);
-    background-color: #2196f3;
+    background-color: rgba(33, 150, 243);
 }
 
 .infoDialog {

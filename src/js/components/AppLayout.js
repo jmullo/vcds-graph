@@ -18,10 +18,10 @@ class AppLayout extends React.Component {
                     this.context.files.map((file) => (
                         <Grid item key={file.name} xs={12} className="gridItem">
                             <div className="resizable">
-                                <Graph file={file}/>
+                                <Graph file={file} selected={file.name === this.context.selectedFileName} />
                             </div>
                             <div className="tableDiv">
-                                <DataTable file={file}/>
+                                <DataTable file={file} />
                             </div>
                         </Grid>
                     ))
