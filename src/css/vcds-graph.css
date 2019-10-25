@@ -35,12 +35,65 @@ div .chip {
     top: -1000px;
 }
 
+#main .grid {
+    margin-bottom: 8px;
+}
+
+#main .grid .gridItem {
+    padding-top: 2px;
+    padding-bottom: 0;
+}
+
+.relative {
+    position: relative;
+}
+
 .graph {
     margin: 2px;
 }
 
 .resizable {
+    margin-bottom: 0;
+}
+
+.hidden {
+    display: none;
+}
+
+.tableDiv {
+    position: relative;
+    margin-top: 8px;
     margin-bottom: 6px;
+}
+
+.switch {
+    position: absolute;
+    top: -40px;
+    right: 0;
+}
+
+.table {
+    padding-top: 4px;
+    max-height: 400px;
+    overflow: auto;
+}
+
+.table .tableHeader {
+    font-size: 12px;
+    line-height: 16px;
+}
+
+.table .tableHeader.narrow {
+    width: 60px;
+}
+
+.table .MuiTableCell-sizeSmall {
+    padding: 6px 6px 6px 12px;
+}
+
+.table tbody tr:hover td {
+    color: rgba(255, 255, 255);
+    background-color: #2196f3;
 }
 
 .infoDialog {
@@ -50,8 +103,4 @@ div .chip {
 
 .dialog .infoButton {
     margin-top: 4px;
-}
-
-tbody tr {
-    height: 24px !important;
 }

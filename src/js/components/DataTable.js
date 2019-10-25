@@ -1,4 +1,4 @@
-import { memoize, times } from 'lodash';
+import { times } from 'lodash';
 import React from 'react';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -6,15 +6,28 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import Switch from '@material-ui/core/Switch';
 
 export default class DataTable extends React.Component {
 
+    state = {
+        visible: false,
+        table: null
+    }
+
+    handleToggle = () => {
+        this.setState({ visible: !this.state.visible });
+    }
+
     createHeadCell = (measurement, index) => {
-        const { type, sensor, name1, name2 } = measurement;
+        const { advanced, type, sensor, name1, name2 } = measurement;
 
         if (type === 'marker') {
             return (
-                <TableCell key={index} align="right">
+                <TableCell key={index} className="tableHeader narrow" align="right">
+                    <div>
+                        {'\u00a0'}
+                    </div>
                     <div>
                         {name1}
                     </div>
@@ -22,7 +35,7 @@ export default class DataTable extends React.Component {
             );
         } else if (type === 'timestamp') {
             return (
-                <TableCell key={index} align="right">
+                <TableCell key={index} className="tableHeader narrow" align="right">
                     <div>
                         {name1}
                     </div>
@@ -34,24 +47,24 @@ export default class DataTable extends React.Component {
         }
 
         return (
-            <TableCell key={index} align="right">
+            <TableCell key={index} className="tableHeader" align="right">
                 <div>
                     {`[${sensor}]`}
                 </div>
                 <div>
-                    {name2}
+                    {advanced ? `${name1 || ''} ${name2 || ''}` : (name2 || '')}
                 </div>
             </TableCell>
         );
     }
 
-    createHeadCells = memoize((fileName) => {
+    createHeadCells = () => {
         return this.props.file.series
             .filter((measurement) => measurement.type !== 'time')
             .map((measurement, index) => this.createHeadCell(measurement, index));
-    })
+    }
 
-    createRows = memoize((fileName) => {
+    createRows = () => {
         return times(this.props.file.series[0].length, (index) => (
             <TableRow key={index}>
                 {
@@ -65,18 +78,14 @@ export default class DataTable extends React.Component {
                 }
             </TableRow>
         ));
-    })
+    }
 
-    render() {
-        if (!this.props.file) {
-            return null;
-        }
-
+    createTable = () => {
         const { name: fileName } = this.props.file;
 
-        return (
-            <Paper elevation={1}>
-                <Table padding="dense">
+        const table = (
+            <Paper className="table" elevation={4}>
+                <Table size="small">
                     <TableHead>
                         <TableRow>
                             {this.createHeadCells(fileName)}
@@ -87,6 +96,41 @@ export default class DataTable extends React.Component {
                     </TableBody>
                 </Table>
             </Paper>
+        );
+
+        this.setState({ table: table });
+    }
+
+    componentDidMount() {
+        setTimeout(this.createTable, 1);
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        if (this.state.visible !== nextState.visible ||
+            this.state.table !== nextState.table) {
+            return true;
+        }
+
+        return false;
+    }
+
+    render() {
+        if (!this.props.file) {
+            return null;
+        }
+
+        return (
+            <React.Fragment>
+                <div className="switch">
+                    <Switch size="small" color="primary"
+                            checked={this.state.visible} onChange={this.handleToggle} />
+                </div>
+                <div className={this.state.visible ? "" : "hidden"}>
+                    {
+                        this.state.table
+                    }
+                </div>
+            </React.Fragment>
         );
     }
 }
