@@ -76,6 +76,17 @@ export default class InfoButton extends React.Component {
                                         </Link>
                                     </Typography>
                                 </Grid>
+                                <Grid item>
+                                    <Typography variant="body1">
+                                        Donate:&nbsp;
+                                        <Link
+                                            color="secondary"
+                                            variant="body1"
+                                            href="https://www.paypal.me/jmullo">
+                                            https://www.paypal.me/jmullo
+                                        </Link>
+                                    </Typography>
+                                </Grid>
                             </Grid>
                         </div>
                     </Dialog>
