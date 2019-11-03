@@ -1,7 +1,7 @@
-import { startsWith, includes, trim } from 'lodash';
+import { startsWith, includes, trim, isEmpty } from 'lodash';
 import Papa from 'papaparse';
 
-import { UNABLE_TO_IMPORT } from '../constants/messages';
+import { UNABLE_TO_IMPORT, NO_MEASUREMENTS } from '../constants/messages';
 
 const getInfo = (data) => {
     return {
@@ -92,14 +92,58 @@ const getSeries = (data) => {
     }, []);
 };
 
+const splitSessions = (fileName, data) => {
+    const sessions = [];
+    let firstRowIndex;
+
+    data.forEach((row, index) => {
+        if (row[0] && row[1] && row[2] &&
+            data[index + 1] && data[index + 1][0] && data[index + 1][2]) {
+            
+            if (firstRowIndex) {
+                sessions.push({
+                    data: data.slice(firstRowIndex, index)
+                });
+            }
+
+            firstRowIndex = index;
+        } else if (index === data.length - 1) {
+            sessions.push({
+                data: data.slice(firstRowIndex)
+            });
+        }
+    });
+
+    sessions.forEach((session, index) => {
+        session.fileName = (sessions.length === 1) ? fileName : `${fileName} (${index + 1})`;
+    });
+
+    return sessions;
+};
+
 const handleComplete = (fileName, { data, errors }, callback) => {
     try {
-        callback({
-            name: fileName,
-            info: getInfo(data),
-            series: getSeries(data)
-        });
+        if (isEmpty(data)) {
+            callback({
+                name: fileName,
+                errors: [{
+                    message: NO_MEASUREMENTS(fileName)
+                }]
+            });
+        } else {
+            splitSessions(fileName, data).forEach((session) => {
+                const name = session.fileName;
+                const info = getInfo(session.data);
+                const series = getSeries(session.data);
+    
+                setTimeout(() => {
+                    callback({ name, info, series });
+                }, 1);
+            });
+        }
     } catch (error) {
+        console.log(error);
+
         errors.push({
             message: UNABLE_TO_IMPORT(fileName)
         });

@@ -1,4 +1,4 @@
-import { defer, forEach, includes, isEmpty } from 'lodash';
+import { forEach, includes, isEmpty } from 'lodash';
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import { withSnackbar } from 'notistack';
@@ -10,7 +10,11 @@ import { ALREADY_IMPORTED } from '../constants/messages';
 class FileImport extends React.Component {
 
     handleParsedFile = ({ name, info, series, errors }) => {
-        if (!isEmpty(errors)) {
+        if (includes(this.context.fileNames, name)) {
+            this.handleErrors([{
+                message: ALREADY_IMPORTED(name)
+            }]);
+        } else if (!isEmpty(errors)) {
             this.handleErrors(errors);
         } else {
             this.context.addFile({ name, info, series });
@@ -31,15 +35,9 @@ class FileImport extends React.Component {
 
     handleImport = (event) => {
         forEach(event.target.files, (file) => {
-            if (includes(this.context.fileNames, file.name)) {
-                this.handleErrors([{
-                    message: ALREADY_IMPORTED(file.name)
-                }]);
-            } else {
-                defer(() => {
-                    parseFile(file, this.handleParsedFile);
-                });
-            }
+            setTimeout(() => {
+                parseFile(file, this.handleParsedFile);
+            }, 1);
         });
     }
 
