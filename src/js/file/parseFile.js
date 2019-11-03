@@ -1,6 +1,8 @@
 import { startsWith, includes, trim } from 'lodash';
 import Papa from 'papaparse';
 
+import { UNABLE_TO_IMPORT } from '../constants/messages';
+
 const getInfo = (data) => {
     return {
         dateTime: data[0].slice(0, 5).join(' '),
@@ -97,9 +99,9 @@ const handleComplete = (fileName, { data, errors }, callback) => {
             info: getInfo(data),
             series: getSeries(data)
         });
-    } catch {
+    } catch (error) {
         errors.push({
-            message: `Unable to import "${fileName}". Try another log file or contact: jussi.mullo@iki.fi`
+            message: UNABLE_TO_IMPORT(fileName)
         });
 
         callback({

@@ -54,7 +54,11 @@ div .chip {
     z-index: 100;
     width: 34px;
     height: 34px;
-    background: radial-gradient(ellipse at center, rgba(33, 150, 243, 0.6) 0%, rgba(0, 0, 0, 0) 40%);
+    background: radial-gradient(
+        ellipse at center,
+      rgba(33, 150, 243, 0.6) 0%,
+      rgba(0, 0, 0, 0) 40%
+    );
 }
 
 .graph {

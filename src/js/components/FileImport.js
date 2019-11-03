@@ -4,7 +4,8 @@ import Button from '@material-ui/core/Button';
 import { withSnackbar } from 'notistack';
 
 import { FileContext } from 'components/FileContext';
-import parseFile from 'utils/parseFile';
+import parseFile from 'file/parseFile';
+import { ALREADY_IMPORTED } from '../constants/messages';
 
 class FileImport extends React.Component {
 
@@ -32,7 +33,7 @@ class FileImport extends React.Component {
         forEach(event.target.files, (file) => {
             if (includes(this.context.fileNames, file.name)) {
                 this.handleErrors([{
-                    message: `"${file.name}" already imported.`
+                    message: ALREADY_IMPORTED(file.name)
                 }]);
             } else {
                 defer(() => {

@@ -2,23 +2,23 @@ import { reject } from 'lodash';
 import React from 'react';
 import { withSnackbar } from 'notistack';
 
+import { UNABLE_TO_IMPORT } from '../constants/messages';
+
 export const FileContext = React.createContext();
 
 class FileContextProvider extends React.Component {
 
     state = {
         files: [],
-        selectedFileName: null
+        selectedFileName: null,
+        lastAddedFileName: null
     }
 
-    lastAddedFileName = null;
-
     addFile = (file) => {
-        this.lastAddedFileName = file.name;
-
         this.setState({
             files: [...this.state.files, file],
-            selectedFileName: file.name
+            selectedFileName: file.name,
+            lastAddedFileName: file.name
         });
     }
 
@@ -33,7 +33,7 @@ class FileContextProvider extends React.Component {
     }
 
     removeInvalidFile = () => {
-        this.props.enqueueSnackbar(`Unable to import "${this.lastAddedFileName}". Try another log file or contact: jussi.mullo@iki.fi`, {
+        this.props.enqueueSnackbar(UNABLE_TO_IMPORT(this.state.lastAddedFileName), {
             anchorOrigin: {
                 vertical: 'bottom',
                 horizontal: 'center',
@@ -41,7 +41,7 @@ class FileContextProvider extends React.Component {
             }
         });
 
-        this.removeFile(this.lastAddedFileName);
+        this.removeFile(this.state.lastAddedFileName);
     }
 
     selectFile = (fileName) => {
