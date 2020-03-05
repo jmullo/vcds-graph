@@ -9,6 +9,8 @@ import DataTable from 'components/DataTable';
 class AppLayout extends React.Component {
 
     render() {
+        const multipleMeasurements = this.context.files.length > 1 ? true : false;
+
         return (
             <Grid container className="grid" alignItems="center" spacing={2}>
                 <Grid item xs={12}>
@@ -21,7 +23,7 @@ class AppLayout extends React.Component {
                                 <Graph file={file} selected={file.name === this.context.selectedFileName} />
                             </div>
                             <div className="tableDiv">
-                                <DataTable file={file} />
+                                <DataTable file={file} limitedHeight={multipleMeasurements} />
                             </div>
                         </Grid>
                     ))

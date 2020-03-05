@@ -87,8 +87,11 @@ div .chip {
 
 .table {
     padding-top: 4px;
-    max-height: 400px;
     overflow: auto;
+}
+
+.table.limitedHeight {
+    max-height: 400px;
 }
 
 .table .tableHeader {

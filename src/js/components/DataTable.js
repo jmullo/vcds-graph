@@ -82,9 +82,10 @@ export default class DataTable extends React.Component {
 
     createTable = () => {
         const { name: fileName } = this.props.file;
+        const tableClass = this.props.limitedHeight ? 'table limitedHeight' : 'table';
 
         const table = (
-            <Paper className="table" elevation={4}>
+            <Paper className={tableClass} elevation={4}>
                 <Table size="small">
                     <TableHead>
                         <TableRow>
@@ -106,8 +107,12 @@ export default class DataTable extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        if (this.state.visible !== nextState.visible ||
-            this.state.table !== nextState.table) {
+        if (this.props.limitedHeight !== nextProps.limitedHeight) {
+            setTimeout(this.createTable, 1);
+
+            return true;
+        } else if (this.state.visible !== nextState.visible ||
+                   this.state.table !== nextState.table) {
             return true;
         }
 
