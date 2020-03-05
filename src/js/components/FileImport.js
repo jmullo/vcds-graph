@@ -4,8 +4,8 @@ import Button from '@material-ui/core/Button';
 import { withSnackbar } from 'notistack';
 
 import { FileContext } from 'components/FileContext';
-import parseFile from 'file/parseFile';
-import { ALREADY_IMPORTED } from '../constants/messages';
+import parseFile from 'utils/parseFile';
+import { ALREADY_IMPORTED } from 'constants/messages';
 
 class FileImport extends React.Component {
 

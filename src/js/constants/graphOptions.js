@@ -1,5 +1,5 @@
 export const DEFAULT_HEIGHT = 450;
-export const MIN_HEIGHT = 200;
+export const MIN_HEIGHT = 125;
 
 export const OPTIONS = {
     credits: {

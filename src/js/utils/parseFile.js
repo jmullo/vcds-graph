@@ -1,7 +1,7 @@
 import { startsWith, includes, trim, isEmpty } from 'lodash';
 import Papa from 'papaparse';
 
-import { UNABLE_TO_IMPORT, NO_MEASUREMENTS } from '../constants/messages';
+import { UNABLE_TO_IMPORT, NO_MEASUREMENTS } from 'constants/messages';
 
 const getInfo = (data) => {
     return {

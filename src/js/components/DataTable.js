@@ -8,15 +8,19 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Switch from '@material-ui/core/Switch';
 
+import { load, save } from 'utils/storage';
+import { TABLE_VISIBLE_DEFAULT } from 'constants/uiOptions';
+
 export default class DataTable extends React.Component {
 
     state = {
-        visible: false,
+        visible: load('tableVisible', TABLE_VISIBLE_DEFAULT),
         table: null
     }
 
-    handleToggle = () => {
+    handleVisibilityToggle = () => {
         this.setState({ visible: !this.state.visible });
+        save('tableVisible', !this.state.visible);
     }
 
     createHeadCell = (measurement, index) => {
@@ -126,9 +130,9 @@ export default class DataTable extends React.Component {
 
         return (
             <React.Fragment>
-                <div className="switch">
+                <div className="tableSwitch">
                     <Switch size="small" color="primary"
-                            checked={this.state.visible} onChange={this.handleToggle} />
+                            checked={this.state.visible} onChange={this.handleVisibilityToggle} />
                 </div>
                 <div className={this.state.visible ? "" : "hidden"}>
                     {

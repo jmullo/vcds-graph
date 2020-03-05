@@ -115,15 +115,17 @@ export default class Graph extends React.Component {
                             bottomLeft: false,
                             topLeft: false
                         }}>
-                        {
-                            !this.state.resizing &&
-                            <React.Fragment>
-                                {
-                                    this.props.selected && <div className="circle" />
-                                }
+                        
+                        <React.Fragment>
+                            {
+                                this.props.selected && <div className="circle" />
+                            }
+                            {
+                                !this.state.resizing &&
                                 <HighchartsReact highcharts={Highcharts} options={this.options} />
-                            </React.Fragment>
-                        }
+                            }
+                        </React.Fragment>
+                        
                     </Resizable>
                 </Paper>
             </ErrorBoundary>

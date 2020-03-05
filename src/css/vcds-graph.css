@@ -79,7 +79,7 @@ div .chip {
     margin-bottom: 6px;
 }
 
-.switch {
+.tableSwitch {
     position: absolute;
     top: -40px;
     right: 0;

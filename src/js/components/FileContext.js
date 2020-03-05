@@ -2,7 +2,7 @@ import { reject } from 'lodash';
 import React from 'react';
 import { withSnackbar } from 'notistack';
 
-import { UNABLE_TO_IMPORT } from '../constants/messages';
+import { UNABLE_TO_IMPORT } from 'constants/messages';
 
 export const FileContext = React.createContext();
 
