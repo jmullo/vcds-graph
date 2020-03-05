@@ -82,7 +82,10 @@ const getSeries = (data) => {
                 name1: measurements[1][index],
                 name2: measurements[2][index],
                 unit: measurements[3][index],
-                data: measurementValues.map((row) => row[index]),
+                data: measurementValues.map((row) => [
+                    row[1],
+                    row[index]
+                ]),
                 length: length,
                 advanced: measurements.advanced
             });

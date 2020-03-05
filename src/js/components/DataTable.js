@@ -76,7 +76,7 @@ export default class DataTable extends React.Component {
                         .filter((measurement) => measurement.type !== 'time')
                         .map(({ data }, index2) => (
                             <TableCell key={index2} align="right">
-                                {data[index]}
+                                {data[index][1]}
                             </TableCell>
                         ))
                 }

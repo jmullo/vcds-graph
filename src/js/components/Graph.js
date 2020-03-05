@@ -1,4 +1,4 @@
-import { isEqual } from 'lodash';
+import { find, isEqual } from 'lodash';
 import React from 'react';
 import { Resizable } from 're-resizable';
 import Paper from '@material-ui/core/Paper';
@@ -52,17 +52,50 @@ export default class Graph extends React.Component {
         return `[${sensor}] ${name2 || ''}`;
     }
 
+    createYaxisName = (unit) => unit ? unit : 'common';
+
+    createYaxis = (series) => {
+        return series.reduce((result, { yAxis }) => {
+            if (!find(result, { id: yAxis })) {
+                result.push({
+                    ...OPTIONS.yAxis,
+                    id: yAxis
+                });
+            }
+
+            return result;
+        }, []);
+    }
+
+    parseValue = (value) => {
+        const number = parseFloat(value);
+
+        return isNaN(number) ? null : number;
+    }
+
+    sanitizeData = (data) => data.map((point) => [
+        this.parseValue(point[0]),
+        this.parseValue(point[1])
+    ])
+
     createSeries = () => {
         return this.props.file.series
             .filter((measurement) => measurement.type === 'data')
             .map((measurement) => {
-                return {
+                const instance = {
                     name: this.createSeriesName(measurement),
-                    data: measurement.data,
+                    data: this.sanitizeData(measurement.data),
+                    yAxis: this.createYaxisName(measurement.unit),
                     tooltip: {
                         valueSuffix: measurement.unit
+                    },
+                    events: {}
                 }
-            }
+
+                instance.events.hide = () => instance.visible = false;
+                instance.events.show = () => instance.visible = true;
+
+                return instance;
         });
     }
 
@@ -71,6 +104,7 @@ export default class Graph extends React.Component {
             this.options = { ...OPTIONS };
             this.options.subtitle.text = this.createTitle();
             this.options.series = this.createSeries();
+            this.options.yAxis = this.createYaxis(this.options.series);
         }
 
         this.options.chart.height = this.state.height;

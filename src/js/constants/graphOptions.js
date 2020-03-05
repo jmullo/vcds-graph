@@ -70,6 +70,7 @@ export const OPTIONS = {
     tooltip: {
         shared: true,
         hideDelay: 100,
+        headerFormat: '<span style="font-size: 10px">Time: {point.key}</span><br/>',
         pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <span style="font-weight:700">{point.y}</span><br/>'
     },
     xAxis: {
