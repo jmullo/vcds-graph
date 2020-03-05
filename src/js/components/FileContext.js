@@ -1,4 +1,4 @@
-import { reject } from 'lodash';
+import { get, reject } from 'lodash';
 import React from 'react';
 import { withSnackbar } from 'notistack';
 
@@ -24,10 +24,14 @@ class FileContextProvider extends React.Component {
 
     removeFile = (fileName) => {
         const { files, selectedFileName } = this.state;
-        const newSelectedFileName = (fileName === selectedFileName) ? null : selectedFileName;
+        const newFiles = reject(files, ['name', fileName]);
+        
+        const newSelectedFileName = (fileName === selectedFileName)
+                                  ? get(newFiles, ['0', 'name'], null)
+                                  : selectedFileName;
 
         this.setState({
-            files: reject(files, ['name', fileName]),
+            files: newFiles,
             selectedFileName: newSelectedFileName
         });
     }
