@@ -1,3 +1,5 @@
+import formatTooltip from 'utils/formatTooltip';
+
 export const DEFAULT_HEIGHT = 450;
 export const MIN_HEIGHT = 125;
 
@@ -69,7 +71,9 @@ export const OPTIONS = {
     },
     tooltip: {
         shared: true,
+        split: false,
         hideDelay: 100,
+        //formatter: formatTooltip,
         headerFormat: '<span style="font-size: 10px">Time: {point.key}</span><br/>',
         pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <span style="font-weight:700">{point.y}</span><br/>'
     },
@@ -78,10 +82,12 @@ export const OPTIONS = {
             text: null
         },
         labels: {
-            enabled: false
+            enabled: true
         },
+        crosshair: true,
         minorTickInterval: 'auto',
-        tickWidth: 0
+        tickWidth: 0.7,
+        tickLength: 6
     },
     yAxis: {
         title: {

@@ -6,10 +6,12 @@ import Highcharts from 'highcharts';
 import Exporting from 'highcharts/modules/exporting';
 import HighchartsReact from 'highcharts-react-official';
 
-Exporting(Highcharts);
-
+import customTooltipRefresh from 'utils/customTooltipRefresh';
 import { OPTIONS, DEFAULT_HEIGHT, MIN_HEIGHT } from 'constants/graphOptions';
 import ErrorBoundary from './ErrorBoundary';
+
+Exporting(Highcharts);
+customTooltipRefresh();
 
 export default class Graph extends React.Component {
 

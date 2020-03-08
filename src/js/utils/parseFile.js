@@ -3,6 +3,7 @@ import { detectFileEncoding } from 'char-encoding-detector';
 import Papa from 'papaparse';
 
 import { UNABLE_TO_IMPORT, NO_MEASUREMENTS } from 'constants/messages';
+import { time } from 'highcharts';
 
 const getInfo = (data) => {
     return {
@@ -18,14 +19,9 @@ const getSensorTypeAndName = (sensor, index) => {
             name: 'M',
             type: 'marker'
         }
-    } else if (index === 1) {
+    } else if (index === 1 || startsWith(sensor, 'F')) {
         return {
             name: 'T',
-            type: 'timestamp'
-        }
-    } else if (startsWith(sensor, 'F')) {
-        return {
-            name: sensor,
             type: 'time'
         }
     }
@@ -72,11 +68,15 @@ const getSeries = (data) => {
     const measurements = harmonize(data.slice(2, 6));
     const measurementValues = data.slice(6);
     const length = measurementValues.length;
+    
+    let timeIndex;
 
     return measurements[0].reduce((result, sensor, index) => {
         const { name, type } = getSensorTypeAndName(sensor, index);
 
-        if (name) {
+        if (type === 'time') {
+            timeIndex = index;
+        } else if (name) {
             result.push({
                 sensor: name,
                 type: type,
@@ -84,7 +84,7 @@ const getSeries = (data) => {
                 name2: measurements[2][index],
                 unit: measurements[3][index],
                 data: measurementValues.map((row) => [
-                    row[1],
+                    row[timeIndex],
                     row[index]
                 ]),
                 length: length,
