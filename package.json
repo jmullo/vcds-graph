@@ -55,6 +55,7 @@
   "dependencies": {
     "@material-ui/core": "4.9.5",
     "@material-ui/icons": "4.9.1",
+    "char-encoding-detector": "0.0.9",
     "core-js": "3.6.4",
     "highcharts": "8.0.2",
     "highcharts-react-official": "3.0.0",

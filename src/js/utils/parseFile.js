@@ -1,4 +1,5 @@
 import { startsWith, includes, trim, isEmpty } from 'lodash';
+import { detectFileEncoding } from 'char-encoding-detector';
 import Papa from 'papaparse';
 
 import { UNABLE_TO_IMPORT, NO_MEASUREMENTS } from 'constants/messages';
@@ -159,14 +160,16 @@ const handleComplete = (fileName, { data, errors }, callback) => {
 };
 
 export default (file, callback) => {
-    const config = {
-        complete: (result) => handleComplete(file.name, result, callback),
-        error: ({ error }) => callback({ name: file.name, errors: [error] }),
-        encoding: 'windows-1252',
-        worker: false,
-        dynamicTyping: true,
-        skipEmptyLines: true
-    };
-
-    Papa.parse(file, config);
+    detectFileEncoding(file).then((encoding) => {
+        const config = {
+            complete: (result) => handleComplete(file.name, result, callback),
+            error: ({ error }) => callback({ name: file.name, errors: [error] }),
+            encoding: encoding,
+            worker: false,
+            dynamicTyping: true,
+            skipEmptyLines: true
+        };
+    
+        Papa.parse(file, config);
+    });
 };
