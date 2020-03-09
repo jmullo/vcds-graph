@@ -3,7 +3,6 @@ import { detectFileEncoding } from 'char-encoding-detector';
 import Papa from 'papaparse';
 
 import { UNABLE_TO_IMPORT, NO_MEASUREMENTS } from 'constants/messages';
-import { time } from 'highcharts';
 
 const getInfo = (data) => {
     return {
@@ -51,7 +50,7 @@ const harmonize = (measurements) => {
             if (includes(column, ':')) {
                 measurements[0][index] = 'F';
             } else if (startsWith(column, "'")) {
-                previousGroup = column.replace("'", '');
+                previousGroup = column.replace("'", 'G');
                 measurements[0][index] = previousGroup;
             } else if (column === null) {
                 measurements[0][index] = previousGroup;
@@ -68,7 +67,7 @@ const getSeries = (data) => {
     const measurements = harmonize(data.slice(2, 6));
     const measurementValues = data.slice(6);
     const length = measurementValues.length;
-    
+
     let timeIndex;
 
     return measurements[0].reduce((result, sensor, index) => {
@@ -76,17 +75,26 @@ const getSeries = (data) => {
 
         if (type === 'time') {
             timeIndex = index;
-        } else if (name) {
+
+            if (timeIndex === 1) {
+                result.push({
+                    sensor: name,
+                    type: type,
+                    name1: measurements[1][index],
+                    name2: measurements[2][index],
+                    unit: 's',
+                    data: measurementValues.map((row, rowIndex) => [rowIndex, rowIndex]),
+                    length: length
+                });
+            }
+        } else if (type === 'marker' || (name && measurementValues[0][timeIndex])) {
             result.push({
                 sensor: name,
                 type: type,
                 name1: measurements[1][index],
                 name2: measurements[2][index],
                 unit: measurements[3][index],
-                data: measurementValues.map((row) => [
-                    row[timeIndex],
-                    row[index]
-                ]),
+                data: measurementValues.map((row) => [row[timeIndex], row[index]]),
                 length: length,
                 advanced: measurements.advanced
             });

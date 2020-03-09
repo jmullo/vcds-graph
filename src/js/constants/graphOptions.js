@@ -1,7 +1,11 @@
-import formatTooltip from 'utils/formatTooltip';
-
 export const DEFAULT_HEIGHT = 450;
 export const MIN_HEIGHT = 125;
+
+export const GLOBAL_OPTIONS = {
+    lang: {
+        numericSymbols: null
+    }
+};
 
 export const OPTIONS = {
     credits: {
@@ -46,15 +50,31 @@ export const OPTIONS = {
     plotOptions: {
         line: {
             animation: false,
-            allowPointSelect: true,
+            allowPointSelect: false,
             lineWidth: 1.2,
+            findNearestPointBy: 'x',
+            turboThreshold: 5000,
+            states: {
+                hover: {
+                    enabled: true,
+                    lineWidthPlus: 0,
+                    halo: {
+                        size: 8
+                    }
+                },
+                inactive: {
+                    enabled: false,
+                    opacity: 0.1
+                }
+            },
             marker: {
                 enabled: false,
                 symbol: 'circle',
+                radius: 2,
                 states: {
                     hover: {
                         enabled: true,
-                        lineWidthPlus: 0.6
+                        radiusPlus: 1
                     }
                 }
             }
@@ -73,8 +93,8 @@ export const OPTIONS = {
         shared: true,
         split: false,
         hideDelay: 100,
-        //formatter: formatTooltip,
-        headerFormat: '<span style="font-size: 10px">Time: {point.key}</span><br/>',
+        distance: 60,
+        headerFormat: '',
         pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <span style="font-weight:700">{point.y}</span><br/>'
     },
     xAxis: {
@@ -85,7 +105,8 @@ export const OPTIONS = {
             enabled: true
         },
         crosshair: true,
-        minorTickInterval: 'auto',
+        min: 0,
+        minorTickInterval: null,
         tickWidth: 0.7,
         tickLength: 6
     },
@@ -96,7 +117,9 @@ export const OPTIONS = {
         labels: {
             enabled: false
         },
-        minorTickInterval: 'auto',
+        showFirstLabel: false,
+        showLastLabel: true,
+        minorTickInterval: null,
         tickWidth: 0
     },
     exporting: {

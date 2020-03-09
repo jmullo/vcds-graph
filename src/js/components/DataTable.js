@@ -37,7 +37,7 @@ export default class DataTable extends React.Component {
                     </div>
                 </TableCell>
             );
-        } else if (type === 'timestamp') {
+        } else if (type === 'time') {
             return (
                 <TableCell key={index} className="tableHeader narrow" align="right">
                     <div>
@@ -64,7 +64,6 @@ export default class DataTable extends React.Component {
 
     createHeadCells = () => {
         return this.props.file.series
-            .filter((measurement) => measurement.type !== 'time')
             .map((measurement, index) => this.createHeadCell(measurement, index));
     }
 
@@ -72,13 +71,11 @@ export default class DataTable extends React.Component {
         return times(this.props.file.series[0].length, (index) => (
             <TableRow key={index}>
                 {
-                    this.props.file.series
-                        .filter((measurement) => measurement.type !== 'time')
-                        .map(({ data }, index2) => (
-                            <TableCell key={index2} align="right">
-                                {data[index][1]}
-                            </TableCell>
-                        ))
+                    this.props.file.series.map(({ data }, index2) => (
+                        <TableCell key={index2} align="right">
+                            {data[index][1]}
+                        </TableCell>
+                    ))
                 }
             </TableRow>
         ));

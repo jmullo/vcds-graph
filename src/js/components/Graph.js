@@ -1,4 +1,4 @@
-import { find, isEqual } from 'lodash';
+import { find, isEqual, startsWith } from 'lodash';
 import React from 'react';
 import { Resizable } from 're-resizable';
 import Paper from '@material-ui/core/Paper';
@@ -7,8 +7,10 @@ import Exporting from 'highcharts/modules/exporting';
 import HighchartsReact from 'highcharts-react-official';
 
 import customTooltipRefresh from 'utils/customTooltipRefresh';
-import { OPTIONS, DEFAULT_HEIGHT, MIN_HEIGHT } from 'constants/graphOptions';
+import { OPTIONS, GLOBAL_OPTIONS, DEFAULT_HEIGHT, MIN_HEIGHT } from 'constants/graphOptions';
 import ErrorBoundary from './ErrorBoundary';
+
+Highcharts.setOptions(GLOBAL_OPTIONS);
 
 Exporting(Highcharts);
 customTooltipRefresh();
@@ -72,13 +74,13 @@ export default class Graph extends React.Component {
     parseValue = (value) => {
         const number = parseFloat(value);
 
-        return isNaN(number) ? null : number;
+        return isNaN(number) || startsWith(value, '00') ? null : number;
     }
 
     sanitizeData = (data) => data.map((point) => [
         this.parseValue(point[0]),
-        this.parseValue(point[1])
-    ])
+        this.parseValue(point[1])]
+    )
 
     createSeries = () => {
         return this.props.file.series
@@ -94,8 +96,13 @@ export default class Graph extends React.Component {
                     events: {}
                 }
 
-                instance.events.hide = () => instance.visible = false;
-                instance.events.show = () => instance.visible = true;
+                instance.events.hide = (event) => {
+                    instance.visible = false;
+                };
+
+                instance.events.show = (event) => {
+                    instance.visible = true;
+                };
 
                 return instance;
         });
