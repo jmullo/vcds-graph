@@ -1,4 +1,4 @@
-import { includes, find, sortBy } from 'lodash';
+import { includes, sortBy } from 'lodash';
 import Highcharts from 'highcharts';
 
 const slicePoints = (index, series, seriesLength) => {
@@ -24,12 +24,8 @@ export default () => {
                     (pointA, pointB) => Math.abs(point.x - pointA.x) - Math.abs(point.x - pointB.x)
                 )[0];
 
-                if (closestPoint && closestPoint.index) {
-                    const newPoint = find(series.points, { index: closestPoint.index });
-
-                    if (!includes(points, newPoint)) {
-                        points.push(newPoint);
-                    }
+                if (!includes(points, closestPoint)) {
+                    points.push(closestPoint);
                 }
             }
         });
