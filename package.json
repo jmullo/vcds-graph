@@ -61,7 +61,7 @@
     "highcharts-react-official": "3.0.0",
     "lodash": "4.17.15",
     "notistack": "0.9.8",
-    "papaparse": "5.1.1",
+    "papaparse": "5.2.0",
     "re-resizable": "6.2.0",
     "react": "16.13.0",
     "react-dom": "16.13.0",
